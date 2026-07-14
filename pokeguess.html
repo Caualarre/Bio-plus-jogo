@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Página do projeto PokéGuess, com informações, recursos e navegação de volta ao portfólio."
+    />
+    <title>PokéGuess | Prati Studio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/pokeguess.css" />
+  </head>
+  <body>
+    <header class="project-hero">
+      <a class="back-link" href="index.html">← Voltar ao portfólio</a>
+      <span class="project-label">Projeto em destaque</span>
+      <h1>PokéGuess</h1>
+      <p>
+        Um mini game de adivinhação para treinar interface, lógica e feedback
+        visual com JavaScript.
+      </p>
+    </header>
+
+    <main class="project-main">
+      <section class="project-panel game-panel">
+        <div class="game-header">
+          <div>
+            <span class="project-label">Quiz estilo Loldle</span>
+            <h2>Quem é esse Pokémon?</h2>
+            <p class="game-intro">
+              A cada tentativa errada uma nova pista aparece. Você tem 6
+              chances.
+            </p>
+          </div>
+          <div class="scoreboard">
+            <span>Tentativas</span>
+            <strong id="attemptsValue">0/10</strong>
+          </div>
+        </div>
+
+        <div class="clue-grid" id="clueGrid" aria-live="polite">
+          <div class="clue-chip clue-chip-revealed" id="clueLetters">
+            Letras: ?
+          </div>
+          <div class="clue-chip clue-chip-revealed" id="clueLength">
+            Quantidade de letras: ?
+          </div>
+          <div class="clue-chip" id="clueType">Tipo: ?</div>
+          <div class="clue-chip" id="clueAbility">Habilidade: ?</div>
+          <div class="clue-chip" id="clueGeneration">Geração: ?</div>
+          <div class="clue-chip" id="clueColor">Cor: ?</div>
+          <div class="clue-chip" id="clueHabitat">Habitat: ?</div>
+          <div class="clue-chip" id="clueEggGroups">Egg Group: ?</div>
+          <div class="clue-chip" id="clueLegendary">Lendário: ?</div>
+          <div class="clue-chip" id="clueMythical">Mítico: ?</div>
+          <div class="clue-chip" id="clueEvolution">Evolução: ?</div>
+        </div>
+
+        <div class="game-controls">
+          <input
+            id="guessInput"
+            type="text"
+            placeholder="Digite o nome do Pokémon"
+            autocomplete="off"
+          />
+          <button id="guessButton" class="btn btn-primary" type="button">
+            Tentar
+          </button>
+          <button id="restartButton" class="btn btn-secondary" type="button">
+            Reiniciar
+          </button>
+        </div>
+
+        <div class="guess-history">
+          <h3>Histórico</h3>
+          <ul id="historyList"></ul>
+        </div>
+
+        <p id="gameFeedback" class="game-feedback" aria-live="polite"></p>
+      </section>
+
+      <section class="project-panel">
+        <h2>O que ele mostra</h2>
+        <ul>
+          <li>Navegação separada do portfólio principal</li>
+          <li>Lógica de jogo em JavaScript puro</li>
+          <li>Base para imagens, ícones e melhorias futuras</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="js/pokeguess.js"></script>
+  </body>
+</html>

@@ -1,0 +1,308 @@
+:root {
+  --bg: #101218;
+  --surface: rgba(24, 28, 39, 0.86);
+  --text: #f4f7fb;
+  --muted: #c1c8d4;
+  --primary: #8b5cf6;
+  --primary-strong: #6d28d9;
+  --accent: #f59e0b;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(139, 92, 246, 0.16),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at right center,
+      rgba(245, 158, 11, 0.14),
+      transparent 24%
+    ),
+    linear-gradient(180deg, #171a24 0%, var(--bg) 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-hero,
+.project-main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-inline: 20px;
+}
+
+.project-hero {
+  padding-top: 32px;
+  padding-bottom: 44px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+
+.project-label,
+.project-panel h2 {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.project-hero h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  margin: 10px 0 14px;
+}
+
+.project-hero p,
+.project-panel li,
+.project-panel p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.project-main {
+  display: grid;
+  gap: 20px;
+  padding-bottom: 56px;
+}
+
+.game-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-intro {
+  max-width: 56ch;
+  margin-top: 8px;
+}
+
+.scoreboard {
+  min-width: 92px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.scoreboard span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+}
+
+.scoreboard strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem;
+}
+
+.clue-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.clue-chip {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.clue-chip-revealed {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.16),
+    rgba(255, 255, 255, 0.04)
+  );
+}
+
+.clue-chip.is-hidden {
+  opacity: 0.55;
+}
+
+.guess-history {
+  display: grid;
+  gap: 12px;
+}
+
+.guess-history h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.15rem;
+}
+
+.guess-history ul {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.guess-history li {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.game-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 12px;
+}
+
+.game-controls input {
+  min-width: 0;
+}
+
+.game-controls input,
+.game-controls button {
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.game-controls input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 15, 23, 0.75);
+  color: var(--text);
+  outline: none;
+}
+
+.game-controls input:focus {
+  border-color: rgba(85, 214, 190, 0.55);
+  box-shadow: 0 0 0 4px rgba(85, 214, 190, 0.12);
+}
+
+.game-controls input.guess-input--error {
+  border-color: rgba(248, 113, 113, 0.9);
+  background: rgba(127, 29, 29, 0.25);
+  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.14);
+}
+
+.game-controls input.guess-input--success {
+  border-color: rgba(74, 222, 128, 0.9);
+  background: rgba(20, 83, 45, 0.25);
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.14);
+}
+
+.game-feedback {
+  min-height: 24px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.game-feedback--error {
+  color: #f87171;
+}
+
+.game-feedback--success {
+  color: #4ade80;
+}
+
+.guess-history--error {
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.24) !important;
+  background: rgba(127, 29, 29, 0.18) !important;
+}
+
+.btn-secondary {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+}
+
+.project-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.project-panel h2 {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+}
+
+.project-panel ul {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.project-panel li {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.highlight {
+  display: grid;
+  gap: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 800;
+  border: 0;
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: #0e1117;
+  background: linear-gradient(135deg, #8b5cf6, #c4b5fd);
+}
+
+@media (max-width: 640px) {
+  .project-panel {
+    border-radius: 20px;
+  }
+
+  .clue-grid,
+  .game-header,
+  .game-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .game-header {
+    display: grid;
+  }
+
+  .game-controls .btn {
+    width: 100%;
+  }
+}
