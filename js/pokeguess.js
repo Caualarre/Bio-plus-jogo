@@ -1,6 +1,5 @@
 const attemptsValue = document.getElementById("attemptsValue");
 const clueLetters = document.getElementById("clueLetters");
-const clueLength = document.getElementById("clueLength");
 const clueType = document.getElementById("clueType");
 const clueAbility = document.getElementById("clueAbility");
 const clueGeneration = document.getElementById("clueGeneration");
@@ -314,11 +313,9 @@ function normalize(text) {
 function getComparableChar(char) {
   return normalize(char).replace(/[^a-z]/g, "");
 }
-
 function updateClues() {
   if (!currentPokemon) {
-    clueLetters.textContent = "Letras: ...";
-    clueLength.textContent = "Quantidade de letras: ...";
+    clueLetters.textContent = "Nome: ...";
     clueType.textContent = "Tipo: ...";
     clueAbility.textContent = "Habilidade: ...";
     clueGeneration.textContent = "Geração: ...";
@@ -331,35 +328,38 @@ function updateClues() {
     return;
   }
 
-  const totalLetters = normalize(currentPokemon.name).replace(
-    /[^a-z]/g,
-    "",
-  ).length;
+  clueLetters.textContent = `Nome: ${currentLetters}`;
 
-  clueLetters.textContent = `Letras: ${currentLetters}`;
-  clueLength.textContent = `Quantidade de letras: ${totalLetters}`;
   clueType.textContent =
     revealedClues >= 2 ? `Tipo: ${currentPokemon.type}` : "Tipo: ?";
+
   clueAbility.textContent =
     revealedClues >= 3
       ? `Habilidade: ${formatAbilityList(currentPokemon.abilities)}`
       : "Habilidade: ?";
+
   clueGeneration.textContent =
     revealedClues >= 4 ? `Geração: ${currentPokemon.generation}` : "Geração: ?";
+
   clueColor.textContent =
     revealedClues >= 5 ? `Cor: ${currentPokemon.color}` : "Cor: ?";
+
   clueHabitat.textContent =
     revealedClues >= 6 ? `Habitat: ${currentPokemon.habitat}` : "Habitat: ?";
+
   clueEggGroups.textContent =
     revealedClues >= 7
       ? `Egg Group: ${currentPokemon.eggGroups}`
       : "Egg Group: ?";
+
   clueLegendary.textContent =
     revealedClues >= 8
       ? `Lendário: ${currentPokemon.legendary}`
       : "Lendário: ?";
+
   clueMythical.textContent =
     revealedClues >= 9 ? `Mítico: ${currentPokemon.mythical}` : "Mítico: ?";
+
   clueEvolution.textContent =
     revealedClues >= 10
       ? `Evolução: ${currentPokemon.evolution}`

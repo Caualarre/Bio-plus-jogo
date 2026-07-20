@@ -81,6 +81,32 @@ a {
   padding-bottom: 56px;
 }
 
+.project-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.project-panel h2 {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+}
+
+.project-panel ul {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.project-panel li {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .game-panel {
   display: grid;
   gap: 18px;
@@ -119,14 +145,79 @@ a {
   font-size: 1.5rem;
 }
 
+/* ===========================
+   PALAVRA (ESTILO FORCA)
+=========================== */
+
+.letters-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 22px;
+}
+
+.letters-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.22rem;
+}
+
+.letters-clue {
+  width: 100%;
+  max-width: 620px;
+  min-height: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+
+  border-radius: 20px;
+  border: 2px solid rgba(139, 92, 246, 0.45);
+
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.18),
+    rgba(245, 158, 11, 0.12)
+  );
+
+  box-shadow:
+    0 0 24px rgba(139, 92, 246, 0.12),
+    inset 0 0 16px rgba(255, 255, 255, 0.03);
+
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.45rem;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* ===========================
+   DICAS
+=========================== */
+
 .clue-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
 }
 
 .clue-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 72px;
   padding: 16px 18px;
+
+  text-align: center;
+
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -145,28 +236,9 @@ a {
   opacity: 0.55;
 }
 
-.guess-history {
-  display: grid;
-  gap: 12px;
-}
-
-.guess-history h3 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.15rem;
-}
-
-.guess-history ul {
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
-
-.guess-history li {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
+/* ===========================
+   CONTROLES
+=========================== */
 
 .game-controls {
   display: grid;
@@ -214,6 +286,10 @@ a {
   box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.14);
 }
 
+/* ===========================
+   FEEDBACK
+=========================== */
+
 .game-feedback {
   min-height: 24px;
   color: var(--accent);
@@ -228,48 +304,42 @@ a {
   color: #4ade80;
 }
 
-.guess-history--error {
-  color: #fca5a5;
-  border-color: rgba(248, 113, 113, 0.24) !important;
-  background: rgba(127, 29, 29, 0.18) !important;
-}
+/* ===========================
+   HISTÓRICO
+=========================== */
 
-.btn-secondary {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-}
-
-.project-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  border-radius: 24px;
-  padding: 24px;
-}
-
-.project-panel h2 {
-  font-size: 1.6rem;
-  margin-bottom: 14px;
-}
-
-.project-panel ul {
-  list-style: none;
+.guess-history {
   display: grid;
   gap: 12px;
 }
 
-.project-panel li {
+.guess-history h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.15rem;
+}
+
+.guess-history ul {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.guess-history li {
   padding: 14px 16px;
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.highlight {
-  display: grid;
-  gap: 14px;
+.guess-history--error {
+  color: #fca5a5;
+  border-color: rgba(248, 113, 113, 0.24) !important;
+  background: rgba(127, 29, 29, 0.18) !important;
 }
+
+/* ===========================
+   BOTÕES
+=========================== */
 
 .btn {
   display: inline-flex;
@@ -287,19 +357,42 @@ a {
   background: linear-gradient(135deg, #8b5cf6, #c4b5fd);
 }
 
+.btn-secondary {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+}
+
+.highlight {
+  display: grid;
+  gap: 14px;
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
 @media (max-width: 640px) {
   .project-panel {
     border-radius: 20px;
   }
 
-  .clue-grid,
-  .game-header,
+  .game-header {
+    display: grid;
+  }
+
+  .clue-grid {
+    grid-template-columns: 1fr;
+  }
+
   .game-controls {
     grid-template-columns: 1fr;
   }
 
-  .game-header {
-    display: grid;
+  .letters-clue {
+    min-height: 80px;
+    font-size: clamp(1.5rem, 8vw, 2.2rem);
+    letter-spacing: 0.25rem;
   }
 
   .game-controls .btn {
