@@ -35,7 +35,7 @@
             <span class="project-label">Quiz estilo Loldle</span>
             <h2>Quem é esse Pokémon?</h2>
             <p class="game-intro">
-              A cada tentativa errada uma nova pista aparece. Você tem 6
+              A cada tentativa errada uma nova pista aparece. Você tem 10
               chances.
             </p>
           </div>
@@ -82,21 +82,18 @@
           </button>
         </div>
 
+        <div id="pokemonResult" class="pokemon-result" aria-live="polite"></div>
+
+        <div class="pokemon-result-sprite">
+          <img id="pokemonSprite" alt="Sprite do Pokémon" hidden />
+        </div>
+
+        <p id="gameFeedback" class="game-feedback"></p>
+
         <div class="guess-history">
           <h3>Histórico</h3>
           <ul id="historyList"></ul>
         </div>
-
-        <p id="gameFeedback" class="game-feedback" aria-live="polite"></p>
-      </section>
-
-      <section class="project-panel">
-        <h2>O que ele mostra</h2>
-        <ul>
-          <li>Navegação separada do portfólio principal</li>
-          <li>Lógica de jogo em JavaScript puro</li>
-          <li>Base para imagens, ícones e melhorias futuras</li>
-        </ul>
       </section>
     </main>
 

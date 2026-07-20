@@ -14,6 +14,9 @@ const guessButton = document.getElementById("guessButton");
 const restartButton = document.getElementById("restartButton");
 const gameFeedback = document.getElementById("gameFeedback");
 const historyList = document.getElementById("historyList");
+const pokemonSprite = document.getElementById("pokemonSprite");
+const pokemonResult = document.getElementById("pokemonResult");
+const inputAnimationTime = 700;
 
 const maxAttempts = 10;
 const nextRoundDelay = 15000;
@@ -71,7 +74,7 @@ const habitatLabels = {
   urban: "Urbano",
   "waters-edge": "Beira d'água",
 };
-
+// Funções de Formatação
 function capitalizeWords(text) {
   return text
     .split(/\s+/)
@@ -92,10 +95,18 @@ function toDisplayName(name) {
   return capitalizeWords(name.replace(/-/g, " "));
 }
 
-function getTotalLetters(name) {
-  return normalize(name).replace(/[^a-z]/g, "").length;
+function normalize(text) {
+  return text
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
+function getComparableChar(char) {
+  return normalize(char).replace(/[^a-z]/g, "");
+}
+//Funções do nome
 function getRandomLetterIndexPool(name) {
   return Array.from(name)
     .map((char, index) => ({ char: normalize(char), index }))
@@ -134,7 +145,7 @@ function buildHangmanMask(name, revealedIndexes) {
     })
     .join(" ");
 }
-
+//API
 async function fetchJson(url) {
   const response = await fetch(url);
 
@@ -232,6 +243,7 @@ async function fetchRandomPokemon() {
   const evolution = getEvolutionStage(speciesData.name, evolutionData);
 
   return {
+    id: pokemonData.id,
     name: pokemonData.name,
     displayName: toDisplayName(pokemonData.name),
     type: typeList.join("/"),
@@ -245,7 +257,7 @@ async function fetchRandomPokemon() {
     evolution,
   };
 }
-
+//Funções do jogo
 async function loadRound() {
   clearTimers();
   isLoading = true;
@@ -256,9 +268,12 @@ async function loadRound() {
   currentLetters = "";
   revealedLetterIndexes = new Set();
   historyList.innerHTML = "";
+  pokemonSprite.hidden = true;
+  pokemonSprite.removeAttribute("src");
+  pokemonResult.querySelector("h3")?.remove();
+  pokemonResult.querySelector("p")?.remove();
   gameFeedback.className = "game-feedback";
   gameFeedback.textContent = "Carregando dados da PokeAPI...";
-  gameFeedback.className = "game-feedback";
   guessInput.value = "";
   guessInput.disabled = false;
   guessInput.readOnly = false;
@@ -302,17 +317,6 @@ function updateAttempts() {
   attemptsValue.textContent = `${attempts}/${maxAttempts}`;
 }
 
-function normalize(text) {
-  return text
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-}
-
-function getComparableChar(char) {
-  return normalize(char).replace(/[^a-z]/g, "");
-}
 function updateClues() {
   if (!currentPokemon) {
     clueLetters.textContent = "Nome: ...";
@@ -365,7 +369,7 @@ function updateClues() {
       ? `Evolução: ${currentPokemon.evolution}`
       : "Evolução: ?";
 }
-
+//Partida
 function revealLetter(letter) {
   const normalizedLetter = getComparableChar(letter);
   let found = false;
@@ -394,14 +398,65 @@ function resetInputState() {
     guessInput.focus();
   }
 }
+function showPokemonSprite() {
+  pokemonSprite.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.id}.png`;
 
-function lockRoundAfterFailure() {
-  roundLocked = true;
-  guessInput.disabled = true;
-  guessInput.readOnly = true;
-  guessButton.disabled = true;
+  pokemonSprite.alt = currentPokemon.displayName;
+  pokemonSprite.hidden = false;
+}
+function finishRound(win) {
+  if (win) {
+    pokemonResult.innerHTML = `
+      <h3>🎉 Parabéns!</h3>
+      <p>O Pokémon era <strong>${currentPokemon.displayName}</strong>.</p>
+    `;
+  } else {
+    pokemonResult.innerHTML = `
+      <h3>❌ Fim de jogo!</h3>
+      <p>O Pokémon era <strong>${currentPokemon.displayName}</strong>.</p>
+    `;
+  }
+
+  showPokemonSprite();
+
+  resetInputState();
+  lockRoundForNextMatch();
 }
 
+function wrongAttempt(type, rawGuess) {
+  attempts++;
+  revealedClues = Math.min(revealedClues + 1, maxClues);
+
+  updateAttempts();
+  updateClues();
+
+  const item = document.createElement("li");
+  item.textContent =
+    type === "letter" ? `${rawGuess} - letra errada` : `${rawGuess} - errado`;
+
+  item.classList.add("guess-history--error");
+  historyList.prepend(item);
+
+  guessInput.classList.remove("guess-input--success");
+  guessInput.classList.add("guess-input--error");
+
+  if (attempts >= maxAttempts) {
+    finishRound(false);
+    return;
+  }
+
+  gameFeedback.className = "game-feedback game-feedback--error";
+  gameFeedback.textContent =
+    type === "letter"
+      ? "Letra errada. Nova pista liberada."
+      : "Errado. Nova pista liberada.";
+
+  resetInputState();
+
+  setTimeout(() => {
+    guessInput.classList.remove("guess-input--error");
+  }, inputAnimationTime);
+}
 function lockRoundForNextMatch() {
   roundLocked = true;
   guessInput.disabled = true;
@@ -428,11 +483,7 @@ function lockRoundForNextMatch() {
 }
 
 function checkGuess() {
-  if (roundLocked || isLoading) {
-    return;
-  }
-
-  if (!currentPokemon) {
+  if (roundLocked || isLoading || !currentPokemon) {
     return;
   }
 
@@ -451,46 +502,23 @@ function checkGuess() {
     if (found) {
       item.textContent = `${rawGuess} - letra certa`;
       historyList.prepend(item);
+
       gameFeedback.className = "game-feedback game-feedback--success";
       gameFeedback.textContent = `Boa! A letra ${rawGuess.toUpperCase()} apareceu na dica.`;
+
       guessInput.classList.remove("guess-input--error");
       guessInput.classList.add("guess-input--success");
+
       resetInputState();
+
       setTimeout(() => {
         guessInput.classList.remove("guess-input--success");
-      }, 700);
+      }, inputAnimationTime);
+
       return;
     }
 
-    attempts += 1;
-    revealedClues = Math.min(revealedClues + 1, maxClues);
-    updateAttempts();
-    updateClues();
-
-    item.textContent = `${rawGuess} - letra errada`;
-    item.classList.add("guess-history--error");
-    historyList.prepend(item);
-
-    guessInput.classList.remove("guess-input--success");
-    guessInput.classList.add("guess-input--error");
-
-    if (attempts >= maxAttempts) {
-      gameFeedback.textContent = `Fim de jogo. A resposta era ${currentPokemon.displayName}.`;
-      gameFeedback.className = "game-feedback game-feedback--error";
-      lockRoundAfterFailure();
-      resetInputState();
-      setTimeout(() => {
-        guessInput.classList.remove("guess-input--error");
-      }, 700);
-      return;
-    }
-
-    gameFeedback.className = "game-feedback game-feedback--error";
-    gameFeedback.textContent = `Letra errada. Nova pista liberada.`;
-    resetInputState();
-    setTimeout(() => {
-      guessInput.classList.remove("guess-input--error");
-    }, 700);
+    wrongAttempt("letter", rawGuess);
     return;
   }
 
@@ -498,47 +526,18 @@ function checkGuess() {
     const item = document.createElement("li");
     item.textContent = `${rawGuess} - correto!`;
     historyList.prepend(item);
+
     guessInput.classList.remove("guess-input--error");
     guessInput.classList.add("guess-input--success");
-    gameFeedback.className = "game-feedback game-feedback--success";
-    gameFeedback.textContent = `Certo! Era ${currentPokemon.displayName}.`;
-    resetInputState();
-    lockRoundForNextMatch();
+
+    finishRound(true);
+
     return;
   }
 
-  attempts += 1;
-  revealedClues = Math.min(revealedClues + 1, maxClues);
-  updateAttempts();
-  updateClues();
-
-  const item = document.createElement("li");
-  item.textContent = `${rawGuess} - errado`;
-  item.classList.add("guess-history--error");
-  historyList.prepend(item);
-
-  guessInput.classList.remove("guess-input--success");
-  guessInput.classList.add("guess-input--error");
-
-  if (attempts >= maxAttempts) {
-    gameFeedback.textContent = `Fim de jogo. A resposta era ${currentPokemon.displayName}.`;
-    gameFeedback.className = "game-feedback game-feedback--error";
-    lockRoundAfterFailure();
-    resetInputState();
-    setTimeout(() => {
-      guessInput.classList.remove("guess-input--error");
-    }, 700);
-    return;
-  }
-
-  gameFeedback.className = "game-feedback game-feedback--error";
-  gameFeedback.textContent = `Errado. Nova pista liberada.`;
-  resetInputState();
-  setTimeout(() => {
-    guessInput.classList.remove("guess-input--error");
-  }, 700);
+  wrongAttempt("pokemon", rawGuess);
 }
-
+//Eventos/listeners
 guessButton.addEventListener("click", checkGuess);
 
 restartButton.addEventListener("click", () => {
