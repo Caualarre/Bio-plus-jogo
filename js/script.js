@@ -15,14 +15,44 @@ ctaSobre.addEventListener("click", () => {
     "Obrigado pelo interesse. A seção Sobre está logo abaixo.";
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const nome = document.getElementById("nome").value.trim();
+  const botao = form.querySelector("button");
 
-  formStatus.textContent = `Mensagem enviada com sucesso, ${nome || "visitante"}!`;
+  botao.disabled = true;
+  botao.textContent = "Enviando...";
+  formStatus.textContent = "";
 
-  form.reset();
+  try {
+    const resposta = await fetch(
+      "https://formsubmit.co/ajax/a27234b62032fe31688bc17f9cf68391",
+      {
+        method: "POST",
+        body: new FormData(form),
+      },
+    );
+
+    const dados = await resposta.json();
+
+    if (dados.success === "true" || dados.success === true) {
+      const nome = document.getElementById("nome").value.trim();
+
+      formStatus.textContent = `Mensagem enviada com sucesso, ${nome || "visitante"}!`;
+
+      form.reset();
+    } else {
+      formStatus.textContent = "Não foi possível enviar a mensagem.";
+    }
+  } catch (erro) {
+    formStatus.textContent =
+      "Erro ao enviar. Tente novamente em alguns instantes.";
+
+    console.error(erro);
+  } finally {
+    botao.disabled = false;
+    botao.textContent = "Enviar mensagem";
+  }
 });
 
 async function carregarGithub() {
