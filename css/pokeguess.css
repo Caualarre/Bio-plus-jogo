@@ -1,13 +1,21 @@
 :root {
-  --bg: #101218;
-  --surface: rgba(24, 28, 39, 0.86);
-  --text: #f4f7fb;
-  --muted: #c1c8d4;
+  --bg: #090b12;
+  --surface: rgba(20, 24, 36, 0.75);
+  --surface-light: rgba(255, 255, 255, 0.06);
+
+  --text: #f8fafc;
+  --muted: #a8b1c1;
+
   --primary: #8b5cf6;
-  --primary-strong: #6d28d9;
-  --accent: #f59e0b;
-  --border: rgba(255, 255, 255, 0.1);
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  --primary-light: #c4b5fd;
+
+  --gold: #facc15;
+  --success: #4ade80;
+  --danger: #f87171;
+
+  --border: rgba(255, 255, 255, 0.12);
+
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -18,20 +26,44 @@
 
 body {
   min-height: 100vh;
+
   font-family: "Manrope", sans-serif;
+
   color: var(--text);
+
   background:
     radial-gradient(
-      circle at top left,
-      rgba(139, 92, 246, 0.16),
-      transparent 26%
+      circle at 15% 10%,
+      rgba(139, 92, 246, 0.25),
+      transparent 30%
     ),
     radial-gradient(
-      circle at right center,
-      rgba(245, 158, 11, 0.14),
-      transparent 24%
+      circle at 85% 20%,
+      rgba(250, 204, 21, 0.15),
+      transparent 25%
     ),
-    linear-gradient(180deg, #171a24 0%, var(--bg) 100%);
+    linear-gradient(160deg, #151827, var(--bg));
+
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+
+  position: fixed;
+
+  inset: 0;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px
+  );
+
+  background-size: 35px 35px;
+
+  opacity: 0.25;
+
+  pointer-events: none;
 }
 
 a {
@@ -41,361 +73,626 @@ a {
 
 .project-hero,
 .project-main {
-  max-width: 980px;
-  margin: 0 auto;
+  max-width: 1000px;
+
+  margin: auto;
+
   padding-inline: 20px;
 }
 
 .project-hero {
-  padding-top: 32px;
-  padding-bottom: 44px;
+  padding-top: 45px;
+
+  padding-bottom: 35px;
+
+  animation: fade 0.6s ease;
 }
 
 .back-link {
-  display: inline-block;
-  margin-bottom: 24px;
+  display: inline-flex;
+
+  gap: 8px;
+
+  align-items: center;
+
   color: var(--muted);
+
+  transition: 0.3s;
 }
 
-.project-label,
-.project-panel h2 {
-  font-family: "Space Grotesk", sans-serif;
+.back-link:hover {
+  color: white;
+
+  transform: translateX(-4px);
+}
+
+.project-label {
+  display: inline-block;
+
+  margin-top: 20px;
+
+  padding: 6px 14px;
+
+  border-radius: 999px;
+
+  background: rgba(139, 92, 246, 0.15);
+
+  border: 1px solid rgba(139, 92, 246, 0.3);
+
+  color: var(--primary-light);
+
+  font-size: 0.8rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08rem;
+
+  text-transform: uppercase;
 }
 
 .project-hero h1 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  margin: 10px 0 14px;
+  font-family: "Space Grotesk";
+
+  font-size: clamp(3rem, 8vw, 5rem);
+
+  margin: 18px 0;
+
+  background: linear-gradient(90deg, #fff, #c4b5fd);
+
+  background-clip: text;
+
+  color: transparent;
 }
 
-.project-hero p,
-.project-panel li,
-.project-panel p {
+.project-hero p {
+  max-width: 650px;
+
   color: var(--muted);
+
   line-height: 1.8;
 }
 
+/* PANEL */
+
 .project-main {
-  display: grid;
-  gap: 20px;
-  padding-bottom: 56px;
+  padding-bottom: 60px;
 }
 
 .project-panel {
-  background: var(--surface);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.03)
+  );
+
+  backdrop-filter: blur(18px);
+
   border: 1px solid var(--border);
+
   box-shadow: var(--shadow);
-  border-radius: 24px;
-  padding: 24px;
-}
 
-.project-panel h2 {
-  font-size: 1.6rem;
-  margin-bottom: 14px;
-}
+  border-radius: 30px;
 
-.project-panel ul {
-  list-style: none;
-  display: grid;
-  gap: 12px;
-}
+  padding: 30px;
 
-.project-panel li {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  animation: fade 0.7s ease;
 }
 
 .game-panel {
   display: grid;
-  gap: 18px;
+
+  gap: 22px;
 }
+
+/* HEADER */
 
 .game-header {
   display: flex;
+
   justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+
+  gap: 20px;
+}
+
+.game-header h2 {
+  font-family: "Space Grotesk";
+
+  font-size: 1.8rem;
 }
 
 .game-intro {
-  max-width: 56ch;
+  color: var(--muted);
+
   margin-top: 8px;
 }
 
 .scoreboard {
-  min-width: 92px;
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px 22px;
+
+  border-radius: 22px;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  border: 1px solid var(--border);
+
   text-align: center;
 }
 
 .scoreboard span {
   display: block;
+
   color: var(--muted);
-  font-size: 0.82rem;
-  margin-bottom: 6px;
+
+  font-size: 0.8rem;
 }
 
 .scoreboard strong {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.5rem;
+  font-family: "Space Grotesk";
+
+  font-size: 1.8rem;
 }
 
-/* ===========================
-   PALAVRA (ESTILO FORCA)
-=========================== */
+/* PALAVRA */
 
 .letters-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin: 6px 0 22px;
+  display: grid;
+
+  justify-items: center;
+
+  gap: 12px;
 }
 
 .letters-title {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
+
+  letter-spacing: 0.25rem;
+
   color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.22rem;
 }
 
 .letters-clue {
   width: 100%;
-  max-width: 620px;
-  min-height: 100px;
+
+  max-width: 650px;
+
+  min-height: 120px;
 
   display: flex;
-  justify-content: center;
+
   align-items: center;
 
-  padding: 20px;
+  justify-content: center;
 
-  border-radius: 20px;
-  border: 2px solid rgba(139, 92, 246, 0.45);
+  border-radius: 26px;
 
   background: linear-gradient(
     135deg,
-    rgba(139, 92, 246, 0.18),
-    rgba(245, 158, 11, 0.12)
+    rgba(139, 92, 246, 0.25),
+    rgba(250, 204, 21, 0.15)
   );
 
-  box-shadow:
-    0 0 24px rgba(139, 92, 246, 0.12),
-    inset 0 0 16px rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(139, 92, 246, 0.5);
 
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  letter-spacing: 0.45rem;
-  text-align: center;
-  word-break: break-word;
+  font-family: "Space Grotesk";
+
+  font-size: clamp(2rem, 6vw, 3.2rem);
+
+  letter-spacing: 0.6rem;
+
+  box-shadow: 0 0 35px rgba(139, 92, 246, 0.2);
+
+  animation: pulse 3s infinite;
 }
 
-/* ===========================
-   DICAS
-=========================== */
+/* DICAS */
 
 .clue-grid {
   display: grid;
+
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
+
+  gap: 14px;
 }
 
 .clue-chip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 80px;
 
-  min-height: 72px;
-  padding: 16px 18px;
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 
   text-align: center;
 
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 18px;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid var(--border);
+
+  transition: 0.3s;
+}
+
+.clue-chip:hover {
+  transform: translateY(-4px);
+
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .clue-chip-revealed {
-  border-color: rgba(245, 158, 11, 0.35);
+  border-color: rgba(250, 204, 21, 0.5);
+
   background: linear-gradient(
     135deg,
-    rgba(245, 158, 11, 0.16),
+    rgba(250, 204, 21, 0.18),
     rgba(255, 255, 255, 0.04)
   );
 }
 
-.clue-chip.is-hidden {
-  opacity: 0.55;
-}
-
-/* ===========================
-   CONTROLES
-=========================== */
+/* CONTROLES */
 
 .game-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+
+  grid-template-columns: 1fr auto auto;
+
   gap: 12px;
 }
 
 .game-controls input {
-  min-width: 0;
-}
+  padding: 16px 18px;
 
-.game-controls input,
-.game-controls button {
-  transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease,
-    color 0.2s ease;
-}
+  border-radius: 18px;
 
-.game-controls input {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(5, 15, 23, 0.75);
-  color: var(--text);
+  border: 1px solid var(--border);
+
+  background: rgba(0, 0, 0, 0.3);
+
+  color: white;
+
+  font-size: 1rem;
+
   outline: none;
 }
 
 .game-controls input:focus {
-  border-color: rgba(85, 214, 190, 0.55);
-  box-shadow: 0 0 0 4px rgba(85, 214, 190, 0.12);
+  border-color: #8b5cf6;
+
+  box-shadow: 0 0 0 5px rgba(139, 92, 246, 0.2);
 }
-
-.game-controls input.guess-input--error {
-  border-color: rgba(248, 113, 113, 0.9);
-  background: rgba(127, 29, 29, 0.25);
-  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.14);
-}
-
-.game-controls input.guess-input--success {
-  border-color: rgba(74, 222, 128, 0.9);
-  background: rgba(20, 83, 45, 0.25);
-  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.14);
-}
-
-/* ===========================
-   FEEDBACK
-=========================== */
-
-.game-feedback {
-  min-height: 24px;
-  color: var(--accent);
-  font-weight: 700;
-}
-
-.game-feedback--error {
-  color: #f87171;
-}
-
-.game-feedback--success {
-  color: #4ade80;
-}
-
-/* ===========================
-   HISTÓRICO
-=========================== */
-
-.guess-history {
-  display: grid;
-  gap: 12px;
-}
-
-.guess-history h3 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.15rem;
-}
-
-.guess-history ul {
-  list-style: none;
-  display: grid;
-  gap: 10px;
-}
-
-.guess-history li {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.guess-history--error {
-  color: #fca5a5;
-  border-color: rgba(248, 113, 113, 0.24) !important;
-  background: rgba(127, 29, 29, 0.18) !important;
-}
-
-/* ===========================
-   BOTÕES
-=========================== */
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 22px;
+  padding: 15px 25px;
+
   border-radius: 999px;
-  font-weight: 800;
-  border: 0;
+
+  font-weight: 900;
+
   cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
 }
 
 .btn-primary {
-  color: #0e1117;
+  border: none;
+
+  color: #111827;
+
   background: linear-gradient(135deg, #8b5cf6, #c4b5fd);
+
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.35);
 }
 
 .btn-secondary {
-  color: var(--text);
+  color: white;
+
   background: rgba(255, 255, 255, 0.06);
+
   border: 1px solid var(--border);
 }
 
-.highlight {
+/* RESULTADO */
+
+.pokemon-result {
   display: grid;
-  gap: 14px;
+
+  place-items: center;
+
+  text-align: center;
 }
 
-/* ===========================
-   RESPONSIVO
-=========================== */
+.pokemon-result-sprite {
+  width: 100%;
 
-@media (max-width: 640px) {
-  .project-panel {
-    border-radius: 20px;
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  margin: 20px 0;
+}
+
+.pokemon-result-sprite img {
+  width: 150px;
+
+  height: 150px;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+
+  border-radius: 24px;
+
+  padding: 15px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.15),
+    rgba(250, 204, 21, 0.15)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+
+  animation: float 3s ease-in-out infinite;
+
+  transition: transform 0.3s ease;
+}
+
+.pokemon-result-sprite img:hover {
+  transform: scale(1.1) rotate(3deg);
+}
+.guess-history {
+  margin-top: 15px;
+}
+
+.guess-history li {
+  padding: 15px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  margin-bottom: 10px;
+
+  transition: 0.3s;
+}
+
+.guess-history li:hover {
+  transform: translateX(6px);
+}
+
+/* ANIMAÇÕES */
+
+@keyframes fade {
+  from {
+    opacity: 0;
+
+    transform: translateY(20px);
   }
+
+  to {
+    opacity: 1;
+
+    transform: none;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.15);
+  }
+
+  50% {
+    box-shadow: 0 0 45px rgba(139, 92, 246, 0.35);
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  body {
+    font-size: 0.9rem;
+  }
+
+  .project-hero,
+  .project-main {
+    padding-inline: 14px;
+  }
+
+  .project-hero {
+    padding-top: 25px;
+
+    padding-bottom: 20px;
+  }
+
+  .project-label {
+    font-size: 0.7rem;
+
+    padding: 5px 12px;
+  }
+
+  .project-hero h1 {
+    font-size: 2.6rem;
+
+    margin: 14px 0;
+  }
+
+  .project-hero p {
+    font-size: 0.9rem;
+
+    line-height: 1.6;
+  }
+
+  /* CARD PRINCIPAL */
+
+  .project-panel {
+    padding: 18px;
+
+    border-radius: 22px;
+  }
+
+  .game-panel {
+    gap: 16px;
+  }
+
+  /* HEADER */
 
   .game-header {
-    display: grid;
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
   }
 
-  .clue-grid {
-    grid-template-columns: 1fr;
+  .game-header h2 {
+    font-size: 1.35rem;
   }
 
-  .game-controls {
-    grid-template-columns: 1fr;
+  .game-intro {
+    font-size: 0.85rem;
+  }
+
+  .scoreboard {
+    width: 100%;
+
+    padding: 12px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .scoreboard span {
+    margin: 0;
+  }
+
+  .scoreboard strong {
+    font-size: 1.3rem;
+  }
+
+  /* PALAVRA */
+
+  .letters-box {
+    margin-top: 5px;
+  }
+
+  .letters-title {
+    font-size: 0.75rem;
   }
 
   .letters-clue {
-    min-height: 80px;
-    font-size: clamp(1.5rem, 8vw, 2.2rem);
+    min-height: 75px;
+
+    padding: 12px;
+
+    border-radius: 18px;
+
+    font-size: clamp(1.4rem, 9vw, 2rem);
+
     letter-spacing: 0.25rem;
   }
 
-  .game-controls .btn {
-    width: 100%;
+  /* DICAS */
+
+  .clue-grid {
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 8px;
+  }
+
+  .clue-chip {
+    min-height: 58px;
+
+    padding: 10px;
+
+    border-radius: 15px;
+
+    font-size: 0.78rem;
+  }
+
+  /* INPUTS */
+
+  .game-controls {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+  .game-controls input {
+    padding: 13px 15px;
+
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 13px 18px;
+
+    font-size: 0.85rem;
+  }
+
+  /* SPRITE */
+
+  .pokemon-result-sprite {
+    margin: 5px 0;
+  }
+
+  .pokemon-result-sprite img {
+    width: 100px;
+
+    height: 100px;
+
+    padding: 8px;
+  }
+
+  .pokemon-result h3 {
+    font-size: 1.2rem;
+  }
+
+  /* FEEDBACK */
+
+  .game-feedback {
+    min-height: 45px;
+
+    padding: 10px;
+
+    font-size: 0.85rem;
+  }
+
+  /* HISTÓRICO */
+
+  .guess-history {
+    gap: 8px;
+  }
+
+  .guess-history h3 {
+    font-size: 1rem;
+  }
+
+  .guess-history li {
+    padding: 11px;
+
+    font-size: 0.85rem;
   }
 }
