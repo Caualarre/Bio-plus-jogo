@@ -187,6 +187,10 @@ main,
 .hero-card {
   border-radius: 28px;
   padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .hero-card h2,
@@ -339,8 +343,91 @@ textarea {
   text-align: center;
   color: var(--muted);
 }
+/* GitHub */
 
-@media (max-width: 900px) {
+.github-avatar {
+  display: block;
+  width: 160px;
+  height: 160px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+
+  border: 4px solid rgba(85, 214, 190, 0.25);
+  margin: 0 auto 20px;
+}
+
+#githubName {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#githubBio {
+  text-align: center;
+  margin-bottom: 22px;
+  word-break: break-word;
+}
+
+.github-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat {
+  min-width: 0;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+#githubLink {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .hero,
+  main,
+  .footer {
+    padding-inline: 16px;
+  }
+
+  .hero {
+    padding-top: 20px;
+    padding-bottom: 48px;
+  }
+
+  .topbar {
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .topbar-links {
+    justify-content: center;
+    gap: 14px;
+    font-size: 0.92rem;
+  }
+
   .hero-grid,
   .about-grid,
   .project-card,
@@ -348,32 +435,128 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  .topbar {
-    margin-bottom: 48px;
+  .hero-copy {
+    text-align: center;
   }
 
   .hero-copy h1 {
+    font-size: clamp(2rem, 10vw, 2.8rem);
     max-width: none;
+    margin: 12px auto 16px;
   }
-}
 
-@media (max-width: 640px) {
+  .hero-copy p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
   .hero-card,
   .about-grid article,
   .project-card,
   .cep-card,
   .contact-card,
   .project-panel {
-    border-radius: 22px;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  /* GitHub */
+
+  /* GitHub */
+
+  .github-avatar {
+    width: 140px;
+    height: 140px;
+  }
+
+  .github-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    padding: 12px;
+  }
+
+  .stat span {
+    font-size: 0.75rem;
+  }
+
+  .stat strong {
+    font-size: 0.95rem;
+  }
+
+  #githubLink {
+    width: 100%;
+  }
+
+  .hero-card h2,
+  .section-heading h2,
+  .project-panel h2 {
+    font-size: 1.45rem;
+    margin-bottom: 12px;
+  }
+
+  .about-grid h3 {
+    font-size: 1.05rem;
+  }
+
+  .hero-card li {
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 0.95rem;
   }
 
   .hero-actions,
   .project-actions {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
   .btn {
     width: 100%;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+
+  label {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+  }
+
+  textarea {
+    min-height: 120px;
+  }
+
+  .result-box {
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+  }
+
+  .feedback {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .section {
+    padding: 4px 0;
+  }
+
+  main {
+    gap: 22px;
+    padding-bottom: 48px;
+  }
+
+  .footer {
+    font-size: 0.9rem;
   }
 }
