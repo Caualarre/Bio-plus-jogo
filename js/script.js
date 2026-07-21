@@ -76,9 +76,13 @@ async function carregarGithub() {
     document.getElementById("githubBio").textContent =
       profile.bio || "Sem biografia.";
 
+    document.getElementById("githubLogin").textContent = profile.login;
+
     document.getElementById("githubRepos").textContent = profile.public_repos;
 
     document.getElementById("githubFollowers").textContent = profile.followers;
+
+    document.getElementById("githubFollowing").textContent = profile.following;
 
     document.getElementById("githubLocation").textContent =
       profile.location || "Não informado";

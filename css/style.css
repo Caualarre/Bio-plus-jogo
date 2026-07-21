@@ -4,7 +4,6 @@
   --text: #edf4f8;
   --muted: #b7c6cf;
   --primary: #55d6be;
-  --primary-strong: #22bfa3;
   --accent: #f3b64b;
   --border: rgba(255, 255, 255, 0.1);
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
@@ -112,9 +111,7 @@ main,
 }
 
 .hero-copy p,
-.hero-card li,
 .feedback,
-.result-box,
 .project-card p,
 .about-grid p {
   color: var(--muted);
@@ -175,9 +172,7 @@ main,
 .hero-card,
 .about-grid article,
 .project-card,
-.cep-card,
-.contact-card,
-.project-panel {
+.contact-card {
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
@@ -194,23 +189,9 @@ main,
 }
 
 .hero-card h2,
-.section-heading h2,
-.project-panel h2 {
+.section-heading h2 {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   margin-bottom: 16px;
-}
-
-.hero-card ul {
-  list-style: none;
-  display: grid;
-  gap: 14px;
-}
-
-.hero-card li {
-  padding: 16px 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 main {
@@ -227,8 +208,7 @@ main {
   margin-bottom: 20px;
 }
 
-.section-tag,
-.project-label {
+.section-tag {
   display: inline-block;
   color: var(--primary);
   text-transform: uppercase;
@@ -260,9 +240,7 @@ main {
 }
 
 .project-card,
-.cep-card,
-.contact-card,
-.project-panel {
+.contact-card {
   border-radius: 28px;
   padding: 28px;
 }
@@ -278,18 +256,6 @@ main {
   color: var(--accent);
   font-weight: 700;
   margin-bottom: 10px;
-}
-
-.cep-card {
-  display: grid;
-  gap: 4px;
-}
-
-.cep-form {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  margin-top: 14px;
 }
 
 label {
@@ -318,14 +284,6 @@ textarea:focus {
 textarea {
   min-height: 140px;
   resize: vertical;
-}
-
-.result-box {
-  min-height: 24px;
-  margin-top: 18px;
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .contact-card {
@@ -453,9 +411,7 @@ textarea {
   .hero-card,
   .about-grid article,
   .project-card,
-  .cep-card,
-  .contact-card,
-  .project-panel {
+  .contact-card {
     padding: 20px;
     border-radius: 18px;
   }
@@ -490,8 +446,7 @@ textarea {
   }
 
   .hero-card h2,
-  .section-heading h2,
-  .project-panel h2 {
+  .section-heading h2 {
     font-size: 1.45rem;
     margin-bottom: 12px;
   }
@@ -534,12 +489,6 @@ textarea {
 
   textarea {
     min-height: 120px;
-  }
-
-  .result-box {
-    padding: 14px;
-    border-radius: 14px;
-    font-size: 0.92rem;
   }
 
   .feedback {
