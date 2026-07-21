@@ -34,15 +34,15 @@ let countdownInterval = null;
 let isLoading = false;
 
 const generationLabels = {
-  "generation-i": "I",
-  "generation-ii": "II",
-  "generation-iii": "III",
-  "generation-iv": "IV",
-  "generation-v": "V",
-  "generation-vi": "VI",
-  "generation-vii": "VII",
-  "generation-viii": "VIII",
-  "generation-ix": "IX",
+  "generation-i": "1",
+  "generation-ii": "2",
+  "generation-iii": "3",
+  "generation-iv": "4",
+  "generation-v": "5",
+  "generation-vi": "6",
+  "generation-vii": "7",
+  "generation-viii": "8",
+  "generation-ix": "9",
 };
 
 const colorLabels = {
@@ -113,7 +113,7 @@ function getRandomLetterIndexPool(name) {
     .filter(({ char }) => /[a-z]/.test(char))
     .map(({ index }) => index);
 }
-
+//obter os indixes legais do nome, para revelar letras aleatórias
 function getInitialRevealIndexes(name, revealCount = 2) {
   const letterIndexes = getRandomLetterIndexPool(name);
 
@@ -131,7 +131,7 @@ function getInitialRevealIndexes(name, revealCount = 2) {
 
   return revealedIndexes;
 }
-
+// Cria O jogo da velha com as letras reveladas e as não reveladas, substituindo as não reveladas por "_"
 function buildHangmanMask(name, revealedIndexes) {
   const chars = Array.from(name);
 
@@ -146,6 +146,7 @@ function buildHangmanMask(name, revealedIndexes) {
     .join(" ");
 }
 //API
+// Funções para buscar dados da PokeAPI
 async function fetchJson(url) {
   const response = await fetch(url);
 
@@ -208,9 +209,9 @@ function getEvolutionStage(speciesName, evolutionData) {
 }
 
 async function fetchRandomPokemon() {
-  const randomId = Math.floor(Math.random() * MAX_SPECIES) + 1;
+  const randomId = Math.floor(Math.random() * MAX_SPECIES) + 1; //sorteia um número aleatório entre 1 e MAX_SPECIES
 
-  const pokemonData = await fetchJson(`${apiBaseUrl}/pokemon/${randomId}`);
+  const pokemonData = await fetchJson(`${apiBaseUrl}/pokemon/${randomId}`); //substitui o id aleatório na URL da API para buscar os dados do Pokémon
   const speciesData = await fetchJson(pokemonData.species.url);
   const evolutionData = speciesData.evolution_chain?.url
     ? await fetchJson(speciesData.evolution_chain.url)
@@ -258,6 +259,7 @@ async function fetchRandomPokemon() {
   };
 }
 //Funções do jogo
+//resetar o jogo, carregando um novo Pokémon e reiniciando as variáveis de estado
 async function loadRound() {
   clearTimers();
   isLoading = true;
@@ -370,6 +372,7 @@ function updateClues() {
       : "Evolução: ?";
 }
 //Partida
+// testa caso a letra esteja no nome do Pokémon e revelar
 function revealLetter(letter) {
   const normalizedLetter = getComparableChar(letter);
   let found = false;
@@ -404,6 +407,7 @@ function showPokemonSprite() {
   pokemonSprite.alt = currentPokemon.displayName;
   pokemonSprite.hidden = false;
 }
+// termina a partida dando o resultado e qual era o pokémon
 function finishRound(win) {
   if (win) {
     pokemonResult.innerHTML = `
@@ -481,7 +485,7 @@ function lockRoundForNextMatch() {
     loadRound();
   }, nextRoundDelay);
 }
-
+//controla o digitado do usuário e verifica se acertou o Pokémon ou a letra, chamando as funções de acordo
 function checkGuess() {
   if (roundLocked || isLoading || !currentPokemon) {
     return;

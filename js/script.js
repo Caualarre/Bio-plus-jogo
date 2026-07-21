@@ -4,7 +4,7 @@ const ctaFeedback = document.getElementById("ctaFeedback");
 const form = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 
-const GITHUB_USER = "Caualarre"; // <-- coloque seu usuário aqui
+const GITHUB_USER = "Caualarre"; // Coloque seu usuário aqui para trocar os dados do GitHub exibidos na página
 
 ctaSobre.addEventListener("click", () => {
   document
@@ -14,7 +14,7 @@ ctaSobre.addEventListener("click", () => {
   ctaFeedback.textContent =
     "Obrigado pelo interesse. A seção Sobre está logo abaixo.";
 });
-
+// Adiciona um evento para o envio do formulário
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -23,7 +23,7 @@ form.addEventListener("submit", async (event) => {
   botao.disabled = true;
   botao.textContent = "Enviando...";
   formStatus.textContent = "";
-
+  // Envia os dados do formulário para o FormSubmit para o email especificado (que está protegido pelo código de hash)
   try {
     const resposta = await fetch(
       "https://formsubmit.co/ajax/a27234b62032fe31688bc17f9cf68391",
@@ -54,17 +54,14 @@ form.addEventListener("submit", async (event) => {
     botao.textContent = "Enviar mensagem";
   }
 });
-
+// Carrega e mostra os dados do GitHub do usuário especificado o qual pode ser substituido por outro usuário mudando a constante GITHUB_USER no início do arquivo e mostra os repositórios também.
 async function carregarGithub() {
   try {
-    // =============================
-    // Perfil
-    // =============================
-
+    //Perfil do usuário
     const profileResponse = await fetch(
       `https://api.github.com/users/${GITHUB_USER}`,
     );
-
+    // Caso o usuário não seja encontrado, lança um erro
     if (!profileResponse.ok) {
       throw new Error("Usuário não encontrado.");
     }
@@ -88,10 +85,7 @@ async function carregarGithub() {
 
     document.getElementById("githubLink").href = profile.html_url;
 
-    // =============================
     // Repositórios
-    // =============================
-
     const reposResponse = await fetch(
       `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated`,
     );
